@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
+import WorkoutScreen from './screens/WorkoutScreen';
+import RxScreen from './screens/RxScreen';
+import WeightScreen from './screens/WeightScreen';
+import WaterScreen from './screens/WaterScreen';
+
+const Stack = createStackNavigator();
+
+export default class App extends React.Component {
+
+
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name = "Login" component={LoginScreen} options={{headerShown: false, gestureEnabled: false}}/>
+          <Stack.Screen name = "Main" component={HomeScreen} options={{headerShown: false,gestureEnabled: false}}/>
+          <Stack.Screen name = "Rx" component={RxScreen} options={{headerShown: false, gestureEnabled: false}}/>
+          <Stack.Screen name = "Workout" component={WorkoutScreen} options={{headerShown: false, gestureEnabled: false}}/>
+          <Stack.Screen name = "Weight" component={WeightScreen} options={{headerShown: false, gestureEnabled: false}}/>
+          <Stack.Screen name = "Water" component={WaterScreen} options={{headerShown: false, gestureEnabled: false}}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+    
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
