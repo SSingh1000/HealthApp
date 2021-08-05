@@ -4,10 +4,10 @@ import { Avatar, Button, Card, Title,Switch ,Paragraph} from 'react-native-paper
 import {LinearGradient} from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { margin } from 'styled-system';
 
 
-const LeftContent = props => <Avatar.Icon {...props} icon="dumbbell" />
+const LeftContent = props => <Avatar.Icon {...props} icon="pill"
+/>
 const {height} = Dimensions.get('window');
 
 export default class Workout extends Component{
@@ -105,13 +105,14 @@ getAlarms = () =>
             cards.push(
                 <Card style={styles.cards}>
                     <LinearGradient
+                        style = {styles.card}
                         colors={['#007991', '#78ffd6']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
                     >
                 <Card.Title
         
-                    title="Workout" 
+                    title="Supplement & Prescription" 
                     left={LeftContent} 
                 />
                 <Card.Content>
@@ -140,7 +141,7 @@ getAlarms = () =>
             >
         <Card.Title
 
-            title="Workout" 
+            title="Supplement & Prescription" 
             left={LeftContent} 
         />
         <Card.Content>
@@ -227,7 +228,8 @@ const styles = StyleSheet.create({
         height: 250,
         width: 390,
         maxHeight: 60,
-        justifyContent:'space-evenly'
+        justifyContent:'space-evenly',
+        borderRadius: 45
         
     },
    
@@ -255,6 +257,10 @@ const styles = StyleSheet.create({
         position:'absolute',
         fontSize: 35,
         top: 70,
+    },
+    card:{
+        borderRadius: 30
+
     }
    
 });

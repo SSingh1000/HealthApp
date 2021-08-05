@@ -105,72 +105,6 @@ export default class LoginScreen extends Component{
 };
 
 
-/*doLogin = () =>
-    {
-        
-              debugger;     
-            let loginPayload = 
-            {
-                login: global.login.trim(),
-                password: global.password.trim()
-            }
-
-            let httpRequest = 
-            {
-                method: 'post',
-                body: JSON.stringify(loginPayload),
-                headers: {'Content-Type': 'application/json; charset=utf-8'}
-            }
-            
-            fetch('https://health-n-wellness-prod.herokuapp.com/api/login', httpRequest)
-            .then(this.checkResponse)
-            .catch(function(error) { console.log(error); })
-            .then(response => response.json())
-            .then(responseData =>
-            {
-                if (responseData.error.length === 0)
-                {
-                    let userDataStore = 
-                    {
-                        id: responseData.id,
-                        firstName: responseData.firstName,
-                        lastName: responseData.lastName,
-                    }
-
-                    AsyncStorage.setItem('user_data', JSON.stringify(userDataStore));
-                    this.props.navigation.navigate('Main');
-                }
-                else
-                {
-                    console.log('error', + " " + responseData.error);
-                }
-            });
-        
-    }
-
-    checkResponse = (response) =>
-    {
-        if (response.status >= 500)
-        {
-            console.log('error' + " " +'Server Error: Did not get a valid response from server!');
-            throw new Error('Invalid JSON from server - probably a server error');
-        }
-
-        return response;
-    }
-
-
-    LoginNameHandler = async (val) =>
-    {
-      global.login = val;
-    }  
-    
-    PasswordHandler = async (val) =>
-    {
-      global.password = val;
-    }*/
-
-
 doLogin = async () =>{
   let tokenStorage = require('../tokenStorage.js');
   try
@@ -193,6 +127,8 @@ doLogin = async () =>{
       userId:  res.id,
       email: res.email,
       }
+      global.firstName = res.firstName;
+      global.lastName = res.lastName;
       
       tokenStorage.storeToken(res.jwtToken);
      await AsyncStorage.setItem('token_data', JSON.stringify(user));

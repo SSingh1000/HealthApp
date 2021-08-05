@@ -39,6 +39,7 @@
     "react-native-calendar-strip": "^2.2.4",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-local-push-notification": "^1.0.2",
     "react-native-notifications": "^4.1.2",
     "react-native-paper": "^4.9.2",
     "react-native-push-notification": "^7.4.0",

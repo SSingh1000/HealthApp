@@ -3,6 +3,8 @@ import { View, Text, Image, Button, StyleSheet,TouchableOpacity} from 'react-nat
 import {LinearGradient} from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+global.firstName = "";
+global.lastName = "";
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -39,7 +41,7 @@ export default class HomeScreen extends Component{
       <Text style={styles.textView}>
         Welcome:
       </Text>
-      <Text style={styles.textName}>{}</Text>
+      <Text style={styles.textName}>{global.firstName + " "+ global.lastName}</Text>
       <View
         style={styles.tileView}
       >

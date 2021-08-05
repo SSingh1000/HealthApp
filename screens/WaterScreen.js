@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { margin } from 'styled-system';
 
 
-const LeftContent = props => <Avatar.Icon {...props} icon="dumbbell" />
+const LeftContent = props => <Avatar.Icon {...props} icon="water" />
 const {height} = Dimensions.get('window');
 
 export default class Workout extends Component{
@@ -111,7 +111,7 @@ getAlarms = () =>
                     >
                 <Card.Title
         
-                    title="Workout" 
+                    title="Hydration Time" 
                     left={LeftContent} 
                 />
                 <Card.Content>
@@ -140,7 +140,7 @@ getAlarms = () =>
             >
         <Card.Title
 
-            title="Workout" 
+            title="Hydration Time" 
             left={LeftContent} 
         />
         <Card.Content>
