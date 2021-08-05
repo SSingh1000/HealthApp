@@ -204,10 +204,9 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     cards:{
-        flex: 1,
         marginTop: 150,
-        height: 150,
-        width: 370,
+        height: 250,
+        width: 450,
         
     },
     cardTitle:{

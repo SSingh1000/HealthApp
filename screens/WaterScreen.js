@@ -1,15 +1,16 @@
-import React, { Component,useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet,TouchableOpacity,ScrollView,} from 'react-native';
+import React, { Component, useEffect, useState } from 'react';
+import { View, Text, Image,StyleSheet,TouchableOpacity,ScrollView, Alert,SafeAreaView, Dimensions} from 'react-native';
 import { Avatar, Button, Card, Title,Switch ,Paragraph} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
-import axios from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const LeftContent = props => <Avatar.Icon {...props} icon="water" />
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { margin } from 'styled-system';
 
 
-export default class WaterScreen extends Component{
+const LeftContent = props => <Avatar.Icon {...props} icon="dumbbell" />
+const {height} = Dimensions.get('window');
+
+export default class Workout extends Component{
     constructor(props){
         super(props);
         this.state ={
@@ -18,7 +19,12 @@ export default class WaterScreen extends Component{
             alarms: null
         }
     }
-
+    state ={ 
+        ScreenHeight: 0,
+    }
+onContentSizeChange =(contentWidth, contentHeight) =>{
+    this.setState({ScreenHeight: contentHeight});
+};
 
     componentDidMount = async() =>{
         try{
@@ -48,7 +54,7 @@ export default class WaterScreen extends Component{
               if (responseData.error.length === 0)
               {
                   
-                  console.log('Successfully got Water alarms!');
+                  console.log('Successfully got Workout alarms!');
                   this.setState({ alarms: responseData.Alarms })
               }
               else
@@ -65,7 +71,7 @@ export default class WaterScreen extends Component{
         }
     }
 
-    
+
   
 checkResponse = (response) =>{
       if (response.status >= 500)
@@ -99,20 +105,19 @@ getAlarms = () =>
             cards.push(
                 <Card style={styles.cards}>
                     <LinearGradient
-                        colors={['#c6ffdd', '#fbd786','#f7797d']}
+                        colors={['#007991', '#78ffd6']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
                     >
                 <Card.Title
         
-                    title="Hydration" 
+                    title="Workout" 
                     left={LeftContent} 
                 />
                 <Card.Content>
-                    <Title style={{textAlign:'center', bottom: 15, fontSize:24}}>{} </Title>
-                    <Text style={{textAlign:'center'}}>{alarm.item}</Text>
-                    <Text style={{textAlign:'center'}}>{alarm.time}</Text>
-                    <Text style={{textAlign:'center'}}>{daysRepeating.join(', ')}</Text>
+                    <Title style={styles.design}>{alarm.item} </Title>
+                    <Text style={styles.designs}>{alarm.time}</Text>
+                    <Text style={styles.design2}>{daysRepeating.join(', ')}</Text>
 
                     </Card.Content>
                     
@@ -129,13 +134,13 @@ getAlarms = () =>
         cards.push(
         <Card style={styles.cards}>
             <LinearGradient
-                colors={['#c6ffdd', '#fbd786','#f7797d']}
+                colors={['#007991', '#78ffd6']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
         <Card.Title
 
-            title="Prescription" 
+            title="Workout" 
             left={LeftContent} 
         />
         <Card.Content>
@@ -153,8 +158,8 @@ getAlarms = () =>
 
 
 render(){
+    const scrollEnabled = this.state.ScreenHeight > height;
     const alarmCards = this.getAlarms();
-
     return(
             <LinearGradient
                 style={styles.container}
@@ -162,7 +167,14 @@ render(){
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
-              <ScrollView>
+            <Title style={styles.text}>WORKOUT NOTIFICATION:</Title>
+            <SafeAreaView style= {styles.contain}>
+              <ScrollView 
+              style={{flex: 1}}
+              contentContainerStyle = {styles.scollview}
+              scrollEnabled={scrollEnabled}
+              onContentSizeChange={this.onContentSizeChange}
+              >
                 
                
                 {alarmCards}
@@ -180,6 +192,7 @@ render(){
                     />
                 </View>
                 </TouchableOpacity>
+                </SafeAreaView>
              </LinearGradient>
              
         );
@@ -187,29 +200,61 @@ render(){
     
 }
   
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
+    contain:{
+        flex: 1,
+    },
+    scollview:{
+        flexGrow: 1,
+        marginVertical: 20,
+    },
     action:{
         position: 'absolute',
-        bottom: 789,
-        right: 150,
+        bottom: 750,
+        right: 350,
         borderBottomWidth: 1,
         borderBottomColor: 'white',
         paddingBottom: 5
     },
     cards:{
-        flex: 1,
-        marginTop: 150,
-        height: 150,
-        width: 370,
+        marginTop:140,
+        height: 250,
+        width: 390,
+        maxHeight: 60,
+        justifyContent:'space-evenly'
         
     },
-    cardTitle:{
-        justifyContent:'space-around',
-
+   
+    design:{
+        fontSize: 30,
+        textAlign: 'center',
+        top: -20, 
+        color: 'white'
+    },
+    designs:{
+        fontSize: 20,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        top: -16,     
+        color: 'black'
+    },
+    design2:{
+        fontSize: 20,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        top: -13, 
+        color: 'red'    
+    },
+    text:{
+        position:'absolute',
+        fontSize: 35,
+        top: 70,
     }
+   
 });
