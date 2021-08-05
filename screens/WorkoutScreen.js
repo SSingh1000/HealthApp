@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const LeftContent = props => <Avatar.Icon {...props} icon="dumbbell" />
 
 
-export default class RxScreen extends Component{
+export default class Workout extends Component{
     constructor(props){
         super(props);
         this.state ={
@@ -64,44 +64,10 @@ export default class RxScreen extends Component{
 
         }
     }
-    
-     /* getWorkoutAlarm =  async () =>{
-//let data = (await AsyncStorage.getItem('token_data')).toString();
-        
-          let getRxPayload = 
-          {
-              userId: data.userId,
-              
-          }
+
+
   
-          let httpRequest = 
-          {
-              method: 'POST',
-              body: JSON.stringify(getRxPayload),
-              headers: {'Content-Type': 'application/json; charset=utf-8'}
-          }
-  
-          fetch('https://health-n-wellness-prod.herokuapp.com/api/getAllWorkoutAlarmsMobile', httpRequest)
-          .then(this.checkResponse)
-          .catch(function(error) { console.log(error); })
-          .then(response => response.json())
-          .then(responseData =>
-          {
-              if (responseData.error.length === 0)
-              {
-                  
-                  console.log('Successfully deleted alarm!');
-              }
-              else
-              {
-                  console.log('error' + " "+responseData.error);
-              }
-          });
-          
-      }*/
-  
-      checkResponse = (response) =>
-  {
+checkResponse = (response) =>{
       if (response.status >= 500)
       {
           console.log('Server Error: Did not get a valid response from server!');
