@@ -155,7 +155,7 @@ getAlarms = () =>
             );
         });
 
-        return (<div>{cards}</div>);
+        return (<View>{cards}</View>);
     }
     else
     {
@@ -181,7 +181,7 @@ getAlarms = () =>
         </LinearGradient>
         </Card>);
         
-        return (<div>{cards}</div>);
+        return (<View>{cards}</View>);
     }
 }
 
