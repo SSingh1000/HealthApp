@@ -105,7 +105,8 @@ getAlarms = () =>
             cards.push(
                 <Card style={styles.cards}>
                     <LinearGradient
-                        colors={['#007991', '#78ffd6']}
+                        style = {styles.card}
+                        colors={['#EF3B36', '#FFFFFF']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
                     >
@@ -134,7 +135,8 @@ getAlarms = () =>
         cards.push(
         <Card style={styles.cards}>
             <LinearGradient
-                colors={['#007991', '#78ffd6']}
+                style = {styles.card}
+                colors={['#EF3B36', '#FFFFFF']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
@@ -167,7 +169,12 @@ render(){
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
-            <Title style={styles.text}>WORKOUT NOTIFICATION:</Title>
+            <View>
+            <Image
+                style={styles.image}
+                source={require('../assets/WorkoutReminder.png')} />  
+            </View>
+
             <SafeAreaView style= {styles.contain}>
               <ScrollView 
               style={{flex: 1}}
@@ -227,7 +234,9 @@ const styles = StyleSheet.create({
         height: 250,
         width: 390,
         maxHeight: 60,
-        justifyContent:'space-evenly'
+        justifyContent:'space-evenly',
+        borderRadius: 45
+
         
     },
    
@@ -255,6 +264,18 @@ const styles = StyleSheet.create({
         position:'absolute',
         fontSize: 35,
         top: 70,
-    }
+    },
+    image:{
+        position:'absolute',
+          top: -110,
+          width: 305,
+          height: 389,
+          right: -170,
+          resizeMode: 'contain',
+         },
+         card:{
+            borderRadius: 30
+    
+        }
    
 });

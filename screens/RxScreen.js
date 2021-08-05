@@ -168,7 +168,11 @@ render(){
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
-            <Title style={styles.text}>WORKOUT NOTIFICATION:</Title>
+             <View>
+            <Image
+                style={styles.image}
+                source={require('../assets/RxReminder.png')} />  
+            </View>
             <SafeAreaView style= {styles.contain}>
               <ScrollView 
               style={{flex: 1}}
@@ -258,6 +262,14 @@ const styles = StyleSheet.create({
         fontSize: 35,
         top: 70,
     },
+    image:{
+        position:'absolute',
+          top: -60,
+          width: 305,
+          height: 289,
+          right: -180,
+          resizeMode: 'contain',
+         },
     card:{
         borderRadius: 30
 

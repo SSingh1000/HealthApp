@@ -3,14 +3,10 @@ import { View, Text, Image, StyleSheet,TouchableOpacity,ScrollView,} from 'react
 import { Avatar, Button, Card, Title,Switch ,Paragraph} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
-import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LeftContent = props => <Avatar.Icon {...props} icon="dumbbell" />
+const LeftContent = props => <Avatar.Icon {...props} icon="weight" />
 
- 
-
- 
 export default class WeightScreen extends Component{
     constructor(props){
         super(props);
@@ -20,7 +16,6 @@ export default class WeightScreen extends Component{
             alarms: null
         }
     }
-
 
     componentDidMount = async() =>{
         try{
@@ -51,7 +46,7 @@ export default class WeightScreen extends Component{
               {
                   
                   console.log('Successfully got Weight alarms!');
-                  this.setState({ alarms: responseData.Alarms })
+                  this.setState({ alarms: responseData.result })
               }
               else
               {
@@ -79,49 +74,39 @@ checkResponse = (response) =>{
       return response;
   }
 
-getAlarms = () =>
-{
+getAlarms = () =>{
     let alarms = this.state.alarms;
     if (alarms)
     {
         let cards = [];
-        alarms.forEach(function(alarm)
-        {
-            let daysRepeating = [];
-
-            if (alarm.monday) daysRepeating.push('Monday');
-            if (alarm.tuesday) daysRepeating.push('Tuesday');
-            if (alarm.wednesday) daysRepeating.push('Wednesday');
-            if (alarm.thursday) daysRepeating.push('Thursday');
-            if (alarm.friday) daysRepeating.push('Friday');
-            if (alarm.saturday) daysRepeating.push('Saturday');
-            if (alarm.sunday) daysRepeating.push('Sunday');
-            
-
-            cards.push(
-                <Card style={styles.cards}>
-                    <LinearGradient
-                        colors={['#c6ffdd', '#fbd786','#f7797d']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
-                    >
-                <Card.Title
         
-                    title="Prescription" 
-                    left={LeftContent} 
-                />
-                <Card.Content>
-                    <Title style={{textAlign:'center', bottom: 15, fontSize:24}}>{} </Title>
-                    <Text style={{textAlign:'center'}}>{alarm.item}</Text>
-                    <Text style={{textAlign:'center'}}>{alarm.time}</Text>
-                    <Text style={{textAlign:'center'}}>{daysRepeating.join(', ')}</Text>
+        cards.push(
+            <Card style={styles.cards}>
+                <LinearGradient
+                    style = {styles.card}
+                    colors={['#c6ffdd', '#fbd786','#f7797d']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                >
+           
+           
+           
+           
+            <Card.Title
+    
+                title="Weight Tracking" 
+                left={LeftContent} 
+            />
+            <Card.Content>
+                <Title style={{textAlign:'center', bottom: 15, fontSize:24}}>Weight Goal: {alarms}% </Title>
+                <Text style={{textAlign:'center'}}></Text>
 
-                    </Card.Content>
-                    
-                </LinearGradient>
-                </Card>
-            );
-        });
+                </Card.Content>
+                
+            </LinearGradient>
+            </Card>
+        );
+       
 
         return (<View>{cards}</View>);
     }
@@ -131,12 +116,19 @@ getAlarms = () =>
         cards.push(
         <Card style={styles.cards}>
             <LinearGradient
+                style = {styles.card}
                 colors={['#c6ffdd', '#fbd786','#f7797d']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
-        <Card.Title
 
+            <View>
+            <Image
+                style={styles.image}
+                source={require('../assets/WeightTracker.png')} />  
+            </View>
+
+        <Card.Title
             title="Weight Tracking" 
             left={LeftContent} 
         />
@@ -164,14 +156,19 @@ render(){
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
-              <ScrollView>
+                <View>
+            <Image
+                style={styles.image}
+                source={require('../assets/WeightTracker.png')} />  
+            </View>
+
+
                 
                
                 {alarmCards}
 
 
                 
-                </ScrollView>
                
                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('Main')}>
                  <View style={styles.action}>
@@ -195,22 +192,68 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    contain:{
+        flex: 1,
+    },
+    scollview:{
+        flexGrow: 1,
+        marginVertical: 20,
+    },
     action:{
         position: 'absolute',
-        bottom: 789,
+        bottom: 428,
         right: 150,
         borderBottomWidth: 1,
         borderBottomColor: 'white',
         paddingBottom: 5
     },
     cards:{
-        marginTop: 150,
-        height: 250,
-        width: 450,
+        height: 150,
+        width: 290,
+        justifyContent:'space-evenly',
+        borderRadius: 25
+
         
     },
-    cardTitle:{
-        justifyContent:'space-around',
-
-    }
+   
+    design:{
+        fontSize: 29,
+        textAlign: 'center',
+        top: -10, 
+        color: 'white'
+    },
+    designs:{
+        fontSize: 100,
+        textAlign: 'center',
+        fontStyle: 'italic',     
+        color: 'black'
+    },
+    design2:{
+        fontSize: 20,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        top: -13, 
+        color: 'red'    
+    },
+    text:{
+        position:'absolute',
+        fontSize: 35,
+        top: 70,
+    },
+    image:{
+        position:'absolute',
+          top: -440,
+          width: 305,
+          height: 289,
+          right: -165,
+          resizeMode: 'contain',
+         },
+         card:{
+             
+            borderRadius: 10,
+            borderTopStartRadius: 40,
+            borderBottomWidth:40
+    
+        }
+   
 });
