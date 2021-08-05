@@ -15,13 +15,12 @@ export default class RxScreen extends Component{
         this.state ={
             loading: true,
             data:[],
-        
-            
+            alarms: null
         }
     }
 
 
-    getWorkoutAlarm = async() =>{
+    componentDidMount = async() =>{
         try{
             let value = await AsyncStorage.getItem('token_data');
              value = JSON.parse(value)
@@ -49,7 +48,8 @@ export default class RxScreen extends Component{
               if (responseData.error.length === 0)
               {
                   
-                  console.log('Successfully deleted alarm!');
+                  console.log('Successfully got Workout alarms!');
+                  this.setState({ alarms: responseData.Alarms })
               }
               else
               {
@@ -111,16 +111,26 @@ export default class RxScreen extends Component{
       return response;
   }
 
-render(){
-let workout = this.getWorkoutAlarm();
-    return(
-            <LinearGradient
-                style={styles.container}
-                colors={['#2980B9', '#6DD5FA','#FFFFFF']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-            >
-              <ScrollView>
+getAlarms = () =>
+{
+    let alarms = this.state.alarms;
+    if (alarms)
+    {
+        let cards = [];
+        alarms.forEach(function(alarm)
+        {
+            let daysRepeating = [];
+
+            if (alarm.monday) daysRepeating.push('Monday');
+            if (alarm.tuesday) daysRepeating.push('Tuesday');
+            if (alarm.wednesday) daysRepeating.push('Wednesday');
+            if (alarm.thursday) daysRepeating.push('Thursday');
+            if (alarm.friday) daysRepeating.push('Friday');
+            if (alarm.saturday) daysRepeating.push('Saturday');
+            if (alarm.sunday) daysRepeating.push('Sunday');
+            
+
+            cards.push(
                 <Card style={styles.cards}>
                     <LinearGradient
                         colors={['#c6ffdd', '#fbd786','#f7797d']}
@@ -134,15 +144,65 @@ let workout = this.getWorkoutAlarm();
                 />
                 <Card.Content>
                     <Title style={{textAlign:'center', bottom: 15, fontSize:24}}>{} </Title>
-                    <Text style={{textAlign:'center'}}>Workout</Text>
+                    <Text style={{textAlign:'center'}}>{alarm.item}</Text>
+                    <Text style={{textAlign:'center'}}>{alarm.time}</Text>
+                    <Text style={{textAlign:'center'}}>{daysRepeating.join(', ')}</Text>
+
                     </Card.Content>
-                   
-                    <Card.Actions style = {{justifyContent:'space-around'}}>
-                        <Button onPress={() => this.props.navigation.navigate('Main')}>Delete</Button>
-                        <Button>Alarm</Button>
-                    </Card.Actions>
+                    
                 </LinearGradient>
                 </Card>
+            );
+        });
+
+        return (<div>{cards}</div>);
+    }
+    else
+    {
+        let cards = [];
+        cards.push(
+        <Card style={styles.cards}>
+            <LinearGradient
+                colors={['#c6ffdd', '#fbd786','#f7797d']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+            >
+        <Card.Title
+
+            title="Prescription" 
+            left={LeftContent} 
+        />
+        <Card.Content>
+            <Title style={{textAlign:'center', bottom: 15, fontSize:24}}>{} </Title>
+            <Text style={{textAlign:'center'}}>No Data!</Text>
+
+            </Card.Content>
+            
+        </LinearGradient>
+        </Card>);
+        
+        return (<div>{cards}</div>);
+    }
+}
+
+
+render(){
+    const alarmCards = this.getAlarms();
+
+    return(
+            <LinearGradient
+                style={styles.container}
+                colors={['#2980B9', '#6DD5FA','#FFFFFF']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+            >
+              <ScrollView>
+                
+               
+                {alarmCards}
+
+
+                
                 </ScrollView>
                
                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('Main')}>
